@@ -31,22 +31,21 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-// Middleware for parsing form data
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve static files from the 'public' directory
+
 app.use(express.static('public'));
 
-// Route for serving the registration form
+
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-// Route for handling user registration
+
 app.post('/register', (req, res) => {
     const { firstName, lastName, email, password, gender, acceptTerms } = req.body;
 
-    // Create a new user instance
+
     const newUser = new User({
         firstName,
         lastName,
@@ -56,7 +55,7 @@ app.post('/register', (req, res) => {
         acceptTerms: acceptTerms === 'on', // Convert checkbox value to a boolean
     });
 
-    // Save the user to the database
+    
     newUser.save((err) => {
         if (err) {
             console.error(err);
@@ -67,7 +66,7 @@ app.post('/register', (req, res) => {
     });
 });
 
-// Start the server
+
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
